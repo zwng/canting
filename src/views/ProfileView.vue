@@ -9,7 +9,7 @@
       </div>
       <div class="user-info">
         <div v-if="authStore.isLoggedIn" class="user-details">
-          <div class="user-name">{{ authStore.userInfo?.name || '用户' }}</div>
+          <div class="user-name">{{ authStore.userInfo.name || '用户' }}</div>
           <div class="logout-btn" @click="logout">退出登录</div>
         </div>
         <div v-else class="login-text" @click="goToLogin">登录/注册</div>
