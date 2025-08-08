@@ -1,24 +1,32 @@
 <script setup lang="ts">
 import HeaderBar from '@/components/HeaderBar.vue'
+import img011 from '@/assets/images/011_AD0IsZnBDBAEGAAg26XL-wUohMuo1AMwmwI4rgI!800x800.png'
+import img024 from '@/assets/images/024_AD0IsZnBDBAEGAAgi6zL-wUo7_y8mgUwdDh0!800x800.png'
+import img015 from '@/assets/images/015_AD0IsZnBDBAEGAAg4-nL-wUo8MDP-AIwVjhf!800x800.png'
+import img031 from '@/assets/images/031_AD0IsZnBDBAEGAAgncb5-wUo05ewrQUw7gU4jwg!800x800.png'
+import img023 from '@/assets/images/023_AD0IsZnBDBAEGAAg96TL-wUo2NnrwAEw4wM4kwI!800x800.png'
+import img033 from '@/assets/images/033_AD0IsZnBDBAEGAAgwar6-wUooPzQ-gQwygI4ygI!800x800.png'
+import img004 from '@/assets/images/004_AD0IsZnBDBAEGAAg1NLL-wUo9tOmywYwogQ4xQI!800x800.png'
+import img002 from '@/assets/images/002_AD0IsZnBDBACGAAgtKDL-wUonIe4jgUw7gU47gU!450x450.jpg'
 
 const rankingItems = [
   {
     name: '意面套餐',
     price: '¥29.00',
     sales: 155,
-    imageSrc: '/static/011_AD0IsZnBDBAEGAAg26XL-wUohMuo1AMwmwI4rgI!800x800.png',
+    imageSrc: img011,
   },
   {
     name: '炒饭套餐',
     price: '¥35.00',
     sales: 100,
-    imageSrc: '/static/024_AD0IsZnBDBAEGAAgi6zL-wUo7_y8mgUwdDh0!800x800.png',
+    imageSrc: img024,
   },
   {
     name: '米饭套餐',
     price: '¥45.00',
     sales: 98,
-    imageSrc: '/static/015_AD0IsZnBDBAEGAAg4-nL-wUo8MDP-AIwVjhf!800x800.png',
+    imageSrc: img015,
   },
 ]
 </script>
@@ -30,15 +38,12 @@ const rankingItems = [
     <!-- 顶部背景图片区域 -->
     <div class="hero-section">
       <div class="hero-background">
-        <img src="/static/031_AD0IsZnBDBAEGAAgncb5-wUo05ewrQUw7gU4jwg!800x800.png" alt="美食背景" />
+        <img :src="img031" alt="美食背景" />
       </div>
       <div class="hero-content">
         <div class="hero-text">
           <div class="hero-title-image">
-            <img
-              src="/static/023_AD0IsZnBDBAEGAAg96TL-wUo2NnrwAEw4wM4kwI!800x800.png"
-              alt="健康美味"
-            />
+            <img :src="img023" alt="健康美味" />
           </div>
           <p class="hero-subtitle">满足你的味蕾!</p>
           <div class="hero-badge">尽享快乐"食"光</div>
@@ -56,10 +61,7 @@ const rankingItems = [
         <div class="recommendation-content">
           <div class="main-recommendation">
             <div class="food-image">
-              <img
-                src="/static/033_AD0IsZnBDBAEGAAgwar6-wUooPzQ-gQwygI4ygI!800x800.png"
-                alt="减脂沙拉套餐"
-              />
+              <img :src="img033" alt="减脂沙拉套餐" />
             </div>
             <div class="food-info">
               <div class="food-name">减脂沙拉套餐鸡胸肉</div>
@@ -91,10 +93,7 @@ const rankingItems = [
       <div class="other-recommendations">
         <div class="recommendation-card">
           <div class="food-image">
-            <img
-              src="/static/004_AD0IsZnBDBAEGAAg1NLL-wUo9tOmywYwogQ4xQI!800x800.png"
-              alt="辣子鸡丁"
-            />
+            <img :src="img004" alt="辣子鸡丁" />
           </div>
           <div class="food-info">
             <div class="food-name">辣子鸡丁</div>
@@ -103,10 +102,7 @@ const rankingItems = [
         </div>
         <div class="recommendation-card">
           <div class="food-image">
-            <img
-              src="/static/002_AD0IsZnBDBACGAAgtKDL-wUonIe4jgUw7gU47gU!450x450.jpg"
-              alt="青椒牛肉"
-            />
+            <img :src="img002" alt="青椒牛肉" />
           </div>
           <div class="food-info">
             <div class="food-name">青椒牛肉</div>
@@ -164,7 +160,10 @@ const rankingItems = [
 
 .hero-title-image {
   margin-bottom: @spacing-md;
-
+  position: absolute;
+  top: -360px;
+  right: 92px;
+  transform: scale(1.5);
   img {
     max-width: 180px;
     height: auto;

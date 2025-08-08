@@ -41,8 +41,10 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import HeaderBar from '@/components/HeaderBar.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const form = reactive({
   account: '',
@@ -59,6 +61,13 @@ const handleLogin = () => {
 
   // 模拟登录
   console.log('登录信息：', form)
+
+  // 使用auth store登录
+  authStore.login({
+    account: form.account,
+    name: form.account,
+  })
+
   alert('登录成功！')
   router.push('/profile')
 }

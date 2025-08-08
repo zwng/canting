@@ -81,8 +81,10 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import HeaderBar from '@/components/HeaderBar.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const form = reactive({
   account: '',
@@ -117,8 +119,15 @@ const handleRegister = () => {
 
   // 模拟注册
   console.log('注册信息：', form)
+
+  // 注册成功后自动登录
+  authStore.login({
+    account: form.account,
+    name: form.name,
+  })
+
   alert('注册成功！')
-  router.push('/login')
+  router.push('/profile')
 }
 </script>
 

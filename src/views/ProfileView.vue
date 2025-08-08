@@ -8,7 +8,11 @@
         <div class="avatar-icon">🛍️</div>
       </div>
       <div class="user-info">
-        <div class="login-text" @click="goToLogin">登录/注册</div>
+        <div v-if="authStore.isLoggedIn" class="user-details">
+          <div class="user-name">{{ authStore.userInfo?.name || '用户' }}</div>
+          <div class="logout-btn" @click="logout">退出登录</div>
+        </div>
+        <div v-else class="login-text" @click="goToLogin">登录/注册</div>
       </div>
     </div>
 
@@ -58,11 +62,18 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import HeaderBar from '@/components/HeaderBar.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const goToLogin = () => {
   router.push('/login')
+}
+
+const logout = () => {
+  authStore.logout()
+  alert('已退出登录')
 }
 </script>
 
@@ -107,6 +118,27 @@ const goToLogin = () => {
 
     &:hover {
       opacity: 0.8;
+    }
+  }
+
+  .user-details {
+    text-align: center;
+  }
+
+  .user-name {
+    font-size: @font-size-lg;
+    font-weight: 500;
+    margin-bottom: @spacing-sm;
+  }
+
+  .logout-btn {
+    font-size: @font-size-sm;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

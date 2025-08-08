@@ -73,7 +73,12 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import HeaderBar from '@/components/HeaderBar.vue'
+import { useAuthStore } from '@/stores/auth'
+
+const router = useRouter()
+const authStore = useAuthStore()
 
 const form = reactive({
   name: '',
@@ -96,6 +101,11 @@ const peopleOptions = [
 ]
 
 const submit = () => {
+  // 检查登录状态
+  if (!authStore.requireLogin()) {
+    return
+  }
+
   // 简单校验
   if (!form.name.trim()) {
     return alert('请输入您的姓名')

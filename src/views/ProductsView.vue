@@ -70,6 +70,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import HeaderBar from '@/components/HeaderBar.vue'
+import { useAuthStore } from '@/stores/auth'
+import img033 from '@/assets/images/033_AD0IsZnBDBAEGAAgwar6-wUooPzQ-gQwygI4ygI!800x800.png'
+import img032 from '@/assets/images/AD0IsZnBDBACGAAg7J7L-wUokIjnkwcw7gU47gU.jpg'
+import img031 from '@/assets/images/031_AD0IsZnBDBAEGAAgncb5-wUo05ewrQUw7gU4jwg!800x800.png'
+import img030 from '@/assets/images/AD0IsZnBDBACGAAgtKDL-wUorvfjwAMw7gU47gU.jpg'
+import img029 from '@/assets/images/AD0IsZnBDBACGAAghqHL-wUol52_IDDuBTjuBQ.jpg'
+import img028 from '@/assets/images/AD0IsZnBDBACGAAg0KLL-wUogIqIzwIw7gU47gU.jpg'
+const authStore = useAuthStore()
 
 // 分类数据
 const categories = [
@@ -86,42 +94,42 @@ const products = [
     name: '巧克力切片',
     price: '59.00',
     category: 'cake',
-    image: '/static/033_AD0IsZnBDBAEGAAgwar6-wUooPzQ-gQwygI4ygI!800x800.png',
+    image: img033,
   },
   {
     id: 2,
     name: '慕斯蛋糕',
     price: '59.00',
     category: 'cake',
-    image: '/static/032_AD0IsZnBDBAEGAAgwKr6-wUo2YLkzAQwygI4rAM!800x800.png',
+    image: img032,
   },
   {
     id: 3,
     name: '芝士蛋糕',
     price: '68.00',
     category: 'cake',
-    image: '/static/031_AD0IsZnBDBAEGAAgncb5-wUo05ewrQUw7gU4jwg!800x800.png',
+    image: img031,
   },
   {
     id: 4,
     name: '寿司拼盘',
     price: '88.00',
     category: 'japanese',
-    image: '/static/030_AD0IsZnBDBAEGAAgktb5-wUo2IrU9QUwHjge!800x800.png',
+    image: img030,
   },
   {
     id: 5,
     name: '意大利面',
     price: '45.00',
     category: 'western',
-    image: '/static/029_AD0IsZnBDBAEGAAgjqzL-wUogPC6zgYw7gU4rAM!800x800.png',
+    image: img029,
   },
   {
     id: 6,
     name: '宫保鸡丁',
     price: '38.00',
     category: 'chinese',
-    image: '/static/028_AD0IsZnBDBAEGAAgi6zL-wUosNy1lgUwogE4owE!800x800.png',
+    image: img028,
   },
 ]
 
@@ -136,7 +144,13 @@ const filteredProducts = computed(() => {
 })
 
 const addToCart = (product: any) => {
+  // 检查登录状态
+  if (!authStore.requireLogin()) {
+    return
+  }
+
   console.log('添加到购物车:', product.name)
+  alert(`已将 ${product.name} 添加到购物车！`)
   // 这里可以添加购物车逻辑
 }
 </script>

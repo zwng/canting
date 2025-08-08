@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+  base: './', // 添加相对路径配置
   plugins: [vue()],
   resolve: {
     alias: {
