@@ -1,5 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import HomeView from '@/views/HomeView.vue'
+import LoginView from '@/views/LoginView.vue'
+import ProductsView from '@/views/ProductsView.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import ReservationView from '@/views/ReservationView.vue'
+
 // 获取正确的 base URL
 const getBaseUrl = () => {
   // 如果是开发环境，使用 '/'
@@ -17,38 +24,32 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomeView.vue'),
-      meta: { title: '首页' }
+      component: HomeView
     },
     {
       path: '/products',
       name: 'products',
-      component: () => import('@/views/ProductsView.vue'),
-      meta: { title: '所有产品' }
+      component: ProductsView
     },
     {
       path: '/reservation',
       name: 'reservation',
-      component: () => import('@/views/ReservationView.vue'),
-      meta: { title: '堂食订位' }
+      component: ReservationView
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('@/views/ProfileView.vue'),
-      meta: { title: '我的' }
+      component: ProfileView
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue'),
-      meta: { title: '登录' }
+      component: LoginView
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import('@/views/RegisterView.vue'),
-      meta: { title: '注册' }
+      component: RegisterView
     }
   ]
 })
