@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, nextTick, ref } from 'vue'
 import HeaderBar from '@/components/HeaderBar.vue'
 import img011 from '@/assets/images/011_AD0IsZnBDBAEGAAg26XL-wUohMuo1AMwmwI4rgI!800x800.png'
 import img024 from '@/assets/images/024_AD0IsZnBDBAEGAAgi6zL-wUo7_y8mgUwdDh0!800x800.png'
@@ -8,6 +9,10 @@ import img023 from '@/assets/images/023_AD0IsZnBDBAEGAAg96TL-wUo2NnrwAEw4wM4kwI!
 import img033 from '@/assets/images/033_AD0IsZnBDBAEGAAgwar6-wUooPzQ-gQwygI4ygI!800x800.png'
 import img004 from '@/assets/images/004_AD0IsZnBDBAEGAAg1NLL-wUo9tOmywYwogQ4xQI!800x800.png'
 import img002 from '@/assets/images/002_AD0IsZnBDBACGAAgtKDL-wUonIe4jgUw7gU47gU!450x450.jpg'
+
+const isLoading = ref(true)
+const loadedImages = ref(0)
+const totalImages = ref(8) // 总共需要加载的图片数量
 
 const rankingItems = [
   {
@@ -29,84 +34,145 @@ const rankingItems = [
     imageSrc: img015,
   },
 ]
+
+onMounted(async () => {
+  console.log('HomeView mounted')
+  // 等待DOM更新完成
+  await nextTick()
+  console.log('HomeView DOM updated')
+})
+
+const onImageLoad = () => {
+  console.log('Hero image loaded successfully')
+  loadedImages.value++
+  checkAllImagesLoaded()
+}
+
+const onImageError = (event: Event) => {
+  console.error('Hero image failed to load:', event)
+  loadedImages.value++
+  checkAllImagesLoaded()
+}
+
+const checkAllImagesLoaded = () => {
+  if (loadedImages.value >= totalImages.value) {
+    setTimeout(() => {
+      isLoading.value = false
+    }, 500) // 延迟500ms确保过渡效果
+  }
+}
 </script>
 
 <template>
   <div class="home-view">
-    <HeaderBar />
-
-    <!-- 顶部背景图片区域 -->
-    <div class="hero-section">
-      <div class="hero-background">
-        <img :src="img031" alt="美食背景" />
-      </div>
-      <div class="hero-content">
-        <div class="hero-text">
-          <div class="hero-title-image">
-            <img :src="img023" alt="健康美味" />
-          </div>
-          <p class="hero-subtitle">满足你的味蕾!</p>
-          <div class="hero-badge">尽享快乐"食"光</div>
-        </div>
+    <!-- Loading 显示 -->
+    <div v-if="isLoading" class="loading-overlay">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在加载...</div>
       </div>
     </div>
 
-    <div class="content">
-      <!-- 新品推荐区域 -->
-      <div class="new-recommendations">
-        <div class="section-header">
-          <div class="recommendation-badge">新品推荐</div>
-        </div>
+    <!-- 主要内容 -->
+    <div v-show="!isLoading" class="main-content">
+      <HeaderBar />
 
-        <div class="recommendation-content">
-          <div class="main-recommendation">
-            <div class="food-image">
-              <img :src="img033" alt="减脂沙拉套餐" />
-            </div>
-            <div class="food-info">
-              <div class="food-name">减脂沙拉套餐鸡胸肉</div>
-              <div class="food-price">¥29.00</div>
-            </div>
+      <!-- 测试内容，确保页面能正确显示 -->
+      <div
+        style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 9999;
+          background: red;
+          color: white;
+          padding: 10px;
+          display: none;
+        "
+      >
+        测试内容 - 如果看到这个说明页面正常加载
+      </div>
+
+      <!-- 顶部背景图片区域 -->
+      <div class="hero-section">
+        <div class="hero-background">
+          <img :src="img031" alt="美食背景" @load="onImageLoad" @error="onImageError" />
+          <div class="hero-title-image">
+            <img :src="img023" alt="健康美味" @load="onImageLoad" @error="onImageError" />
+          </div>
+        </div>
+        <div class="hero-content">
+          <div class="hero-text">
+            <p class="hero-subtitle">满足你的味蕾!</p>
+            <div class="hero-badge">尽享快乐"食"光</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- 新品推荐区域 -->
+        <div class="new-recommendations">
+          <div class="section-header">
+            <div class="recommendation-badge">新品推荐</div>
           </div>
 
-          <div class="sales-ranking">
-            <div class="ranking-title">月销售排行榜</div>
-            <div class="ranking-inner">
-              <div class="ranking-list">
-                <div v-for="(item, index) in rankingItems" :key="index" class="ranking-item">
-                  <div class="ranking-pic">
-                    <img :src="item.imageSrc" :alt="item.name" />
-                    <div class="ranking-badge" :class="'rank-' + (index + 1)">{{ index + 1 }}</div>
-                  </div>
-                  <div class="ranking-info">
-                    <div class="ranking-price">{{ item.price }}</div>
-                    <div class="ranking-sales">月销售 {{ item.sales }}</div>
+          <div class="recommendation-content">
+            <div class="main-recommendation">
+              <div class="food-image">
+                <img :src="img033" alt="减脂沙拉套餐" @load="onImageLoad" @error="onImageError" />
+              </div>
+              <div class="food-info">
+                <div class="food-name">减脂沙拉套餐鸡胸肉</div>
+                <div class="food-price">¥29.00</div>
+              </div>
+            </div>
+
+            <div class="sales-ranking">
+              <div class="ranking-title">月销售排行榜</div>
+              <div class="ranking-inner">
+                <div class="ranking-list">
+                  <div v-for="(item, index) in rankingItems" :key="index" class="ranking-item">
+                    <div class="ranking-pic">
+                      <img
+                        :src="item.imageSrc"
+                        :alt="item.name"
+                        @load="onImageLoad"
+                        @error="onImageError"
+                      />
+                      <div class="ranking-badge" :class="'rank-' + (index + 1)">
+                        {{ index + 1 }}
+                      </div>
+                    </div>
+                    <div class="ranking-info">
+                      <div class="ranking-price">{{ item.price }}</div>
+                      <div class="ranking-sales">月销售 {{ item.sales }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 其他推荐内容 -->
-      <div class="other-recommendations">
-        <div class="recommendation-card">
-          <div class="food-image">
-            <img :src="img004" alt="辣子鸡丁" />
+        <!-- 其他推荐内容 -->
+        <div class="other-recommendations">
+          <div class="recommendation-card">
+            <div class="food-image">
+              <img :src="img004" alt="辣子鸡丁" @load="onImageLoad" @error="onImageError" />
+            </div>
+            <div class="food-info">
+              <div class="food-name">辣子鸡丁</div>
+              <div class="food-price">¥32.00</div>
+            </div>
           </div>
-          <div class="food-info">
-            <div class="food-name">辣子鸡丁</div>
-            <div class="food-price">¥32.00</div>
-          </div>
-        </div>
-        <div class="recommendation-card">
-          <div class="food-image">
-            <img :src="img002" alt="青椒牛肉" />
-          </div>
-          <div class="food-info">
-            <div class="food-name">青椒牛肉</div>
-            <div class="food-price">¥39.00</div>
+          <div class="recommendation-card">
+            <div class="food-image">
+              <img :src="img002" alt="青椒牛肉" @load="onImageLoad" @error="onImageError" />
+            </div>
+            <div class="food-info">
+              <div class="food-name">青椒牛肉</div>
+              <div class="food-price">¥39.00</div>
+            </div>
           </div>
         </div>
       </div>
@@ -115,6 +181,54 @@ const rankingItems = [
 </template>
 
 <style lang="less" scoped>
+// Loading 样式
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: @white;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid @gray-light;
+  border-top: 3px solid @primary-color;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto @spacing-md;
+}
+
+.loading-text {
+  color: @text-color;
+  font-size: @font-size-md;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// 主要内容
+.main-content {
+  width: 100%;
+  height: 100%;
+}
+
 .home-view {
   min-height: 100vh;
   background-color: @secondary-color;
@@ -150,22 +264,26 @@ const rankingItems = [
   justify-content: center;
   padding: @spacing-xl;
   padding-bottom: @spacing-xxl;
+  pointer-events: none; // 防止遮挡点击事件
 }
 
 .hero-text {
   text-align: center;
   color: @white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  pointer-events: auto; // 恢复文本的点击事件
 }
 
 .hero-title-image {
   margin-bottom: @spacing-md;
   position: absolute;
-  top: -360px;
-  right: 92px;
-  transform: scale(1.5);
+  top: 0.5rem; // 距离顶部60px，避免被导航栏遮挡
+  right: 0.8rem; // 距离右边30px
+  transform: scale(1.2); // 适中的缩放比例
+  z-index: 3; // 确保在最上层
+
   img {
-    max-width: 180px;
+    max-width: 180px; // 适中的图片大小
     height: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   }

@@ -17,13 +17,14 @@ import BottomTabBar from '@/components/BottomTabBar.vue'
   display: flex;
   flex-direction: column;
   background-color: #f5f5f5;
-  overflow: hidden;
+  overflow: hidden; // 保持这个，防止整体滚动
 }
 
 .router-view {
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  position: relative; // 添加相对定位
 }
 
 * {

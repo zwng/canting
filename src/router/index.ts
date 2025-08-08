@@ -1,46 +1,51 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from '@/views/HomeView.vue'
-import LoginView from '@/views/LoginView.vue'
-import ProductsView from '@/views/ProductsView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import RegisterView from '@/views/RegisterView.vue'
-import ReservationView from '@/views/ReservationView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('@/views/HomeView.vue'),
+      meta: { title: '首页' }
     },
     {
       path: '/products',
       name: 'products',
-      component: ProductsView
+      component: () => import('@/views/ProductsView.vue'),
+      meta: { title: '所有产品' }
     },
     {
       path: '/reservation',
       name: 'reservation',
-      component: ReservationView
+      component: () => import('@/views/ReservationView.vue'),
+      meta: { title: '堂食订位' }
     },
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView
+      component: () => import('@/views/ProfileView.vue'),
+      meta: { title: '我的' }
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: () => import('@/views/LoginView.vue'),
+      meta: { title: '登录' }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: () => import('@/views/RegisterView.vue'),
+      meta: { title: '注册' }
     }
   ]
+})
+
+// 添加路由守卫
+router.beforeEach((to, from, next) => {
+  console.log('Route change:', from.path, '->', to.path)
+  next()
 })
 
 export default router
