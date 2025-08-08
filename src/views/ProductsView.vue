@@ -58,7 +58,11 @@
           </div>
           <div class="product-action">
             <div class="cart-icon" @click="addToCart(product)">
-              <span>🛒</span>
+              <svg viewBox="0 0 24 24" class="cart-svg" aria-hidden="true">
+                <path
+                  d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.16 14.26l.03.01h9.93c.75 0 1.4-.41 1.73-1.03l3.58-6.49a1 1 0 00-.87-1.48H6.21L5.27 2H2v2h2l3.6 7.59-1.35 2.44C5.52 15.37 6.48 17 8 17h12v-2H8.42c-.14 0-.25-.11-.25-.25l.99-1.79z"
+                />
+              </svg>
             </div>
           </div>
         </div>
@@ -376,8 +380,10 @@ const addToCart = (product: any) => {
     transform: scale(1.1);
   }
 
-  span {
-    font-size: 18px;
+  .cart-svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
   }
 }
 </style>
