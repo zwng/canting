@@ -1,11 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
+interface UserInfo {
+    account: string
+    name: string
+}
+
 export const useAuthStore = defineStore('auth', () => {
     const isLoggedIn = ref(false)
-    const userInfo = ref(null)
+    const userInfo = ref<UserInfo | null>(null)
 
-    const login = (userData: any) => {
+    const login = (userData: UserInfo) => {
         isLoggedIn.value = true
         userInfo.value = userData
         // 可以在这里保存到localStorage
