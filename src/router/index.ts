@@ -1,7 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+// 获取正确的 base URL
+const getBaseUrl = () => {
+  // 如果是开发环境，使用 '/'
+  if (import.meta.env.DEV) {
+    return '/'
+  }
+
+  // 生产环境使用 import.meta.env.BASE_URL
+  return import.meta.env.BASE_URL
+}
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(getBaseUrl()),
   routes: [
     {
       path: '/',
@@ -45,6 +56,8 @@ const router = createRouter({
 // 添加路由守卫
 router.beforeEach((to, from, next) => {
   console.log('Route change:', from.path, '->', to.path)
+  console.log('Base URL:', import.meta.env.BASE_URL)
+  console.log('Current location:', window.location.href)
   next()
 })
 

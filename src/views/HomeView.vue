@@ -277,9 +277,9 @@ const checkAllImagesLoaded = () => {
 .hero-title-image {
   margin-bottom: @spacing-md;
   position: absolute;
-  top: 0.5rem; // 距离顶部60px，避免被导航栏遮挡
-  right: 0.8rem; // 距离右边30px
-  transform: scale(1.2); // 适中的缩放比例
+  top: 13%; //离顶部60px，避免被导航栏遮挡
+  right: 22%; // 距离右边30px
+  transform: scale(1.5); // 适中的缩放比例
   z-index: 3; // 确保在最上层
 
   img {
